@@ -1,4 +1,5 @@
 plugins {
+    application
     id("java")
 }
 
@@ -7,6 +8,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass = "hexlet.code.App"
 }
 
 dependencies {
