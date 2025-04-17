@@ -42,13 +42,18 @@ class App implements Callable<Integer> {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> mapFile1 = null;
+        Map<String, Object> mapFile2 = null;
         try {
-            Map<String, Object> mapFile1 = mapper.readValue(new File(String.valueOf(path1)), Map.class);
-            Map<String, Object> mapFile2 = mapper.readValue(new File(String.valueOf(path2)), Map.class);
+            mapFile1 = mapper.readValue(new File(String.valueOf(path1)), Map.class);
+            mapFile2 = mapper.readValue(new File(String.valueOf(path2)), Map.class);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println(Differ.generate(mapFile1, mapFile2));
+
         return 0;
     }
 
