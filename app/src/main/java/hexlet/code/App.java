@@ -5,10 +5,13 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.nio.file.Path;
-import java.util.concurrent.Callable;
-
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Command(name = "gendiff",
         mixinStandardHelpOptions = true,
@@ -18,10 +21,10 @@ import java.io.File;
 class App implements Callable<Integer> {
 
     @Parameters(paramLabel = "filepath1", description = "path to first file")
-    private Path pathToFile1;
+    private String pathToFile1;
 
     @Parameters(paramLabel = "filepath2", description = "path to second file")
-    private Path pathToFile2;
+    private String pathToFile2;
 
     @Option(names = { "-f", "--format" },
             paramLabel = "format",
@@ -31,7 +34,21 @@ class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        System.out.println("Application started.");
+        Path path1 = Paths.get(pathToFile1).toAbsolutePath().normalize(); // C:\Users\Vlad\java-project-71\app\test\java\resources\file1.jso
+        Path path2 = Paths.get(pathToFile2).toAbsolutePath().normalize(); // C:\Users\Vlad\java-project-71\app\test\java\resources\file2.jso
+
+        if (!Files.exists(path1) || !Files.exists(path2)) {
+            throw new Exception("File does not exist");
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Map<String, Object> mapFile1 = mapper.readValue(new File(String.valueOf(path1)), Map.class);
+            Map<String, Object> mapFile2 = mapper.readValue(new File(String.valueOf(path2)), Map.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
