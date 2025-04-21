@@ -9,6 +9,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,8 +43,8 @@ class App implements Callable<Integer> {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> mapFile1 = null;
-        Map<String, Object> mapFile2 = null;
+        Map<String, Object> mapFile1 = new HashMap<>();
+        Map<String, Object> mapFile2 = new HashMap<>();
         try {
             mapFile1 = mapper.readValue(new File(String.valueOf(path1)), Map.class);
             mapFile2 = mapper.readValue(new File(String.valueOf(path2)), Map.class);
