@@ -41,3 +41,4 @@ sonar {
 tasks.test {
     useJUnitPlatform()
 }
+
