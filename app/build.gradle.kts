@@ -30,6 +30,14 @@ checkstyle {
     configFile = File(rootDir, "./config/checkstyle/checkstyle.xml")
 }
 
+sonar {
+    properties {
+        property ("sonar.projectKey", "maruseevvlad_java-project-71")
+        property ("sonar.organization", "maruseevvlad")
+        property ("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
