@@ -1,6 +1,10 @@
 plugins {
     application
+    jacoco
     id("java")
+    id("checkstyle")
+    id("io.freefair.lombok") version "8.13.1"
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 group = "hexlet.code"
@@ -19,6 +23,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("info.picocli:picocli:4.7.6")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+}
+
+checkstyle {
+    // Укажите путь к файлу конфигурации
+    configFile = File(rootDir, "./config/checkstyle/checkstyle.xml")
 }
 
 tasks.test {

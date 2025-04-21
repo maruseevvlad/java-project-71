@@ -34,8 +34,8 @@ class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        Path path1 = Paths.get(pathToFile1).toAbsolutePath().normalize(); // C:\Users\Vlad\java-project-71\app\test\java\resources\file1.jso
-        Path path2 = Paths.get(pathToFile2).toAbsolutePath().normalize(); // C:\Users\Vlad\java-project-71\app\test\java\resources\file2.jso
+        Path path1 = Paths.get(pathToFile1).toAbsolutePath().normalize();
+        Path path2 = Paths.get(pathToFile2).toAbsolutePath().normalize();
 
         if (!Files.exists(path1) || !Files.exists(path2)) {
             throw new Exception("File does not exist");
