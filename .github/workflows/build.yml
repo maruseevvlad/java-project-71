@@ -35,4 +35,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: cd app && ./gradlew build sonar --info
       - name: CheckstyleMain
-        run: ./gradlew checkstyleMain && checkstyleTest
+        run: cd app && ./gradlew checkstyleMain && checkstyleTest
