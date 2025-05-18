@@ -2,3 +2,5 @@
 
 run-dist:
 	./build/install/java-package/bin/app
+
+.PHONY: build

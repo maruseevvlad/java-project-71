@@ -5,14 +5,13 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 @Command(name = "gendiff",
         mixinStandardHelpOptions = true,
@@ -42,18 +41,13 @@ class App implements Callable<Integer> {
             throw new Exception("File does not exist");
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> mapFile1 = new HashMap<>();
-        Map<String, Object> mapFile2 = new HashMap<>();
         try {
-            mapFile1 = mapper.readValue(new File(String.valueOf(path1)), Map.class);
-            mapFile2 = mapper.readValue(new File(String.valueOf(path2)), Map.class);
-
+            Map<String, Object> mapFile1 = Parser.parseFile(path1);
+            Map<String, Object> mapFile2 = Parser.parseFile(path2);
+            System.out.println(Differ.generate(mapFile1, mapFile2));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println(Differ.generate(mapFile1, mapFile2));
 
         return 0;
     }
@@ -62,5 +56,4 @@ class App implements Callable<Integer> {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
-
 }
