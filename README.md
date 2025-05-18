@@ -9,3 +9,7 @@
 Результат работы метода Differ.generate()
 
 ![image](https://github.com/user-attachments/assets/5ff472df-274a-458d-a8f7-607bd6a84809)
+
+Результат работы метода Differ.generate() c .yaml и .yml файлами
+![image](https://github.com/user-attachments/assets/e5bde44e-ab48-4d2a-8e10-17cd46ee5451)
+
