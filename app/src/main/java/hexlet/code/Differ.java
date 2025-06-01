@@ -32,8 +32,19 @@ public class Differ {
     }
 
     private static void appendLine(StringBuilder sb, String prefix, String key, Object value) {
-        String formattedValue = (value instanceof String) ? "\"" + value + "\"" : value.toString();
-        sb.append("  ").append(prefix).append(" ").append(key).append(": ").append(formattedValue).append("\n");
+        String formattedValue;
+        if (value == null) {
+            formattedValue = "null";
+        } else {
+            formattedValue = value.toString();
+        }
+        sb.append("  ")
+                .append(prefix)
+                .append(" ")
+                .append(key)
+                .append(": ")
+                .append(formattedValue)
+                .append("\n");
     }
 
 }
