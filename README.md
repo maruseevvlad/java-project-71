@@ -16,4 +16,6 @@
 Результат работы метода Differ.generate() c вложеннымиструктурами json файлов
 <img width="400" alt="Screenshot_1" src="https://github.com/user-attachments/assets/e27d8e85-54af-4465-b3c1-e6621a39dca7" />
 
+Результат работы приложения при сравнении двух файлов json. Вывод в консоль в формате "plain"
+![image](https://github.com/user-attachments/assets/e9c59bd6-8cb2-44ce-a6cb-8352d567fe3a)
 
