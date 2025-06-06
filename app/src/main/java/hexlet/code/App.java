@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Plain;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -44,7 +45,7 @@ class App implements Callable<Integer> {
         try {
             Map<String, Object> mapFile1 = Parser.parseFile(path1);
             Map<String, Object> mapFile2 = Parser.parseFile(path2);
-            System.out.println(Differ.generate(mapFile1, mapFile2));
+            System.out.println(Differ.stringGenerator(mapFile1, mapFile2, format));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,50 +1,47 @@
 package hexlet.code;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
+
+import java.util.*;
 
 public class Differ {
-    public static String generate(Map<String, Object> file1, Map<String, Object> file2) {
+    static String stringGenerator(Map<String, Object> data1,
+                                  Map<String, Object> data2,
+                                  String format) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Set<String> dataKeys = ImmutableSortedSet.copyOf(Sets.union(data1.keySet(), data2.keySet()));
 
-        Set<String> allKeys = new TreeSet<>();
-        allKeys.addAll(file1.keySet());
-        allKeys.addAll(file2.keySet());
 
-        StringBuilder result = new StringBuilder("{\n");
-        for (String key : allKeys) {
-            Object value1 = file1.get(key);
-            Object value2 = file2.get(key);
+        dataKeys.forEach((key) -> {
 
-            if (!file1.containsKey(key)) {
-                appendLine(result, "+", key, value2);
-            } else if (!file2.containsKey(key)) {
-                appendLine(result, "-", key, value1);
-            } else if (!Objects.equals(value1, value2)) {
-                appendLine(result, "-", key, value1);
-                appendLine(result, "+", key, value2);
+            Object value1 = data1.get(key);
+            Object value2 = data2.get(key);
+
+            Map<String, Object> changes = new HashMap<>();
+            changes.put("key", key);
+            if (!data1.containsKey(key)) {
+                changes.put("type", "added");
+                changes.put("value", value2);
+            } else if (!data2.containsKey(key)) {
+                changes.put("type", "deleted");
+                changes.put("value", value1);
+            } else if (Objects.equals(value1, value2)) {
+                changes.put("type", "unchanged");
+                changes.put("value", value1);
             } else {
-                appendLine(result, " ", key, value1);
+                changes.put("type", "changed");
+                changes.put("value1", value1);
+                changes.put("value2", value2);
             }
-        }
-        return result.append("}").toString();
-    }
 
-    private static void appendLine(StringBuilder sb, String prefix, String key, Object value) {
-        String formattedValue;
-        if (value == null) {
-            formattedValue = "null";
-        } else {
-            formattedValue = value.toString();
-        }
-        sb.append("  ")
-                .append(prefix)
-                .append(" ")
-                .append(key)
-                .append(": ")
-                .append(formattedValue)
-                .append("\n");
-    }
+            list.add(changes);
+        });
 
+        // 1
+        // key login
+        // type - deleted
+        // value - 123
+       return Formatter.formatter(list, format);
+    }
 }
