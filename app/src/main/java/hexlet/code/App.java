@@ -1,6 +1,4 @@
 package hexlet.code;
-
-import hexlet.code.formatters.Plain;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -11,8 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 @Command(name = "gendiff",
         mixinStandardHelpOptions = true,

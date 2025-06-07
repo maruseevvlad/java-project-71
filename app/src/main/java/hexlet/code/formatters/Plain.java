@@ -11,7 +11,7 @@ public class Plain {
 
             switch (type) {
                 case "added":
-                    result.append("Property")
+                    result.append("Property '")
                             .append(key)
                             .append("' was added with value: ")
                             .append(formatValue(keyMap.get("value")))
@@ -37,7 +37,7 @@ public class Plain {
                     throw new RuntimeException("Unknown type: " + type);
             }
         }
-        return result.append("]").toString().trim();
+        return result.toString().trim();
     }
 
     private static String formatValue(Object value) {

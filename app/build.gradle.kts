@@ -19,12 +19,12 @@ application {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:33.1.0-jre")
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation ("info.picocli:picocli:4.7.6")
-    implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1")
+    implementation(libs.guava)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.picocli)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.dataformat.yaml)
 }
 
 checkstyle {
@@ -37,6 +37,9 @@ sonar {
         property ("sonar.projectKey", "maruseevvlad_java-project-71")
         property ("sonar.organization", "maruseevvlad")
         property ("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.verbose", "true") // Включить подробный вывод
+        property("sonar.scanner.dumpToFile", "true") // Сохранить лог в файл
+        property("sonar.login", System.getenv("SONAR_TOKEN"))
     }
 }
 
