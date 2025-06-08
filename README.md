@@ -51,5 +51,4 @@ Java-project-71 — это консольное приложение, предн
 
 ![image](https://github.com/user-attachments/assets/cc3b3ad4-739c-4ebf-8f50-6c8a201d7f91)
 
-## О курсе
-Проект выполнен в рамках прохождения курса по обучению языку Java на платформе [Hexlet](https://hexlet.io/).
+### Проект выполнен в рамках прохождения курса по обучению языку Java на платформе [Hexlet](https://hexlet.io/).
