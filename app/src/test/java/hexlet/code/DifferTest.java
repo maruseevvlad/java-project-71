@@ -62,21 +62,21 @@ public class DifferTest {
     @Test
     void testDifferJson() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
-        String actual = normalizeLineEndings(Differ.stringGenerator(file1Json, file2Json, "stylish"));
+        String actual = normalizeLineEndings(Differ.generate(file1Json, file2Json, "stylish"));
         assertEquals(expected, actual);
     }
 
     @Test
     void testDifferYamlYml() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
-        String actual = normalizeLineEndings(Differ.stringGenerator(file1Yaml, file2Yaml, "stylish"));
+        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Yaml, "stylish"));
         assertEquals(expected, actual);
     }
 
     @Test
     void testDifferYamlJsonPlain() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_plain.txt"));
-        String actual = normalizeLineEndings(Differ.stringGenerator(file1Yaml, file2Json, "plain"));
+        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "plain"));
         assertEquals(expected, actual);
     }
 
@@ -84,7 +84,7 @@ public class DifferTest {
     void testDifferYamlJsonJson() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_json.json")
                 .replaceAll("\\s+", ""));
-        String actual = normalizeLineEndings(Differ.stringGenerator(file1Yaml, file2Json, "json")
+        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "json")
                 .replaceAll("\\s+", ""));
         assertEquals(expected, actual);
     }

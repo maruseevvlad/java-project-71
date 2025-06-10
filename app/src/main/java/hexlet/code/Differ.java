@@ -12,9 +12,9 @@ import java.util.Set;
 
 
 public class Differ {
-    static String stringGenerator(Map<String, Object> data1,
-                                  Map<String, Object> data2,
-                                  String format) {
+    static String generate(Map<String, Object> data1,
+                           Map<String, Object> data2,
+                           String format) {
         List<Map<String, Object>> list = new ArrayList<>();
         Set<String> dataKeys = ImmutableSortedSet.copyOf(Sets.union(data1.keySet(), data2.keySet()));
 
