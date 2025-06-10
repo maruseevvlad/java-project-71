@@ -58,6 +58,7 @@ public class DifferTest {
     @Test
     void testDifferJson() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
+        // Use parsed maps (file1Json, file2Json) instead of file paths
         String actual = normalizeLineEndings(Differ.generate(file1Json, file2Json, "stylish"));
         assertEquals(expected, actual);
     }
@@ -65,6 +66,7 @@ public class DifferTest {
     @Test
     void testDifferYamlYml() throws Exception {
         String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
+        // Use parsed maps (file1Yaml, file2Yaml)
         String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Yaml, "stylish"));
         assertEquals(expected, actual);
     }
