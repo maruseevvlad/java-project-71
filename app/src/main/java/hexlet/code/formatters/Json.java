@@ -93,7 +93,7 @@ public class Json {
         return "\"" + escapeString(value.toString()) + "\"";
     }
 
-    private static String escapeString(String input) {
+    public static String escapeString(String input) {
         StringBuilder escaped = new StringBuilder();
         for (char c : input.toCharArray()) {
             switch (c) {

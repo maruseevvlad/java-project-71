@@ -2,13 +2,12 @@ package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.yaml.snakeyaml.parser.ParserException;
 
 import java.nio.file.Path;
 import java.util.Map;
 import java.io.IOException;
 
-public class Parser {
+public final class Parser {
 
     private Parser() {
         throw new IllegalStateException("Utility class");

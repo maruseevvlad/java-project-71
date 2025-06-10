@@ -3,7 +3,13 @@ package hexlet.code;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
 
 public class Differ {
     static String stringGenerator(Map<String, Object> data1,
@@ -38,10 +44,6 @@ public class Differ {
             list.add(changes);
         });
 
-        // 1
-        // key login
-        // type - deleted
-        // value - 123
-       return Formatter.formatter(list, format);
+        return Formatter.formatter(list, format);
     }
 }

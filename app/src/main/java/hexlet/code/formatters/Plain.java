@@ -1,6 +1,9 @@
 package hexlet.code.formatters;
 
-import java.util.*;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class Plain {
     public static String generate(List<Map<String, Object>> diff) {
