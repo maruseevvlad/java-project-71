@@ -16,43 +16,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DifferTest {
 
     private static final String TEST_RESOURCES_DIR = "src/test/resources/";
+
     private static Map<String, Object> file1Json;
     private static Map<String, Object> file2Json;
     private static Map<String, Object> file1Yaml;
     private static Map<String, Object> file2Yaml;
+
+    private static Path filePath1Json;
+    private static Path filePath2Json;
+    private static Path filePath1Yaml;
+    private static Path filePath2Yaml;
 
     @BeforeAll
     static void beforeAll() throws Exception {
         ObjectMapper jsonMapper = new ObjectMapper();
         ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
 
-        file1Json = jsonMapper.readValue(
-                getTestPath("file1.json").toFile(),
-                new TypeReference<>() {
+        filePath1Json = getTestPath("file1.json");
+        filePath2Json = getTestPath("file2.json");
+        filePath1Yaml = getTestPath("file1.yaml");
+        filePath2Yaml = getTestPath("file2.yml");
 
-                }
-        );
+        file1Json = jsonMapper.readValue(filePath1Json.toFile(), new TypeReference<>() {
 
-        file2Json = jsonMapper.readValue(
-                getTestPath("file2.json").toFile(),
-                new TypeReference<>() {
+        });
+        file2Json = jsonMapper.readValue(filePath2Json.toFile(), new TypeReference<>() {
 
-                }
-        );
+        });
+        file1Yaml = yamlMapper.readValue(filePath1Yaml.toFile(), new TypeReference<>() {
 
-        file1Yaml = yamlMapper.readValue(
-                getTestPath("file1.yaml").toFile(),
-                new TypeReference<>() {
+        });
+        file2Yaml = yamlMapper.readValue(filePath2Yaml.toFile(), new TypeReference<>() {
 
-                }
-        );
-
-        file2Yaml = yamlMapper.readValue(
-                getTestPath("file2.yml").toFile(),
-                new TypeReference<>() {
-
-                }
-        );
+        });
     }
 
     private static Path getTestPath(String filename) {
@@ -82,10 +78,8 @@ public class DifferTest {
 
     @Test
     void testDifferYamlJsonJson() throws Exception {
-        String expected = normalizeLineEndings(readFile("expected_json.json")
-                .replaceAll("\\s+", ""));
-        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "json")
-                .replaceAll("\\s+", ""));
+        String expected = normalizeLineEndings(readFile("expected_json.json").replaceAll("\\s+", ""));
+        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "json").replaceAll("\\s+", ""));
         assertEquals(expected, actual);
     }
 
