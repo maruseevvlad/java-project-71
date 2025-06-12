@@ -13,6 +13,10 @@ public final class Parser {
         throw new IllegalStateException("Utility class");
     }
 
+    public static Map<String, Object> parseFile(String filePath) throws Exception {
+        return parseFile(Path.of(filePath));
+    }
+
     public static Map<String, Object> parseFile(Path filePath) throws Exception {
         String fileName = filePath.toString();
         ObjectMapper mapper;

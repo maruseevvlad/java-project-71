@@ -1,96 +1,73 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static java.nio.file.Files.readString;
 
 public class DifferTest {
-
-    private static final String TEST_RESOURCES_DIR = "src/test/resources/";
-
-    private static Map<String, Object> file1Json;
-    private static Map<String, Object> file2Json;
-    private static Map<String, Object> file1Yaml;
-    private static Map<String, Object> file2Yaml;
 
     private static Path filePath1Json;
     private static Path filePath2Json;
     private static Path filePath1Yaml;
     private static Path filePath2Yaml;
 
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        ObjectMapper jsonMapper = new ObjectMapper();
-        ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+    private static Path expectedStylish;
+    private static Path expectedPlain;
+    private static Path expectedJson;
 
+    @BeforeAll
+    static void beforeAll() {
         filePath1Json = getTestPath("file1.json");
         filePath2Json = getTestPath("file2.json");
         filePath1Yaml = getTestPath("file1.yaml");
         filePath2Yaml = getTestPath("file2.yml");
 
-        file1Json = jsonMapper.readValue(filePath1Json.toFile(), new TypeReference<>() {
-
-        });
-        file2Json = jsonMapper.readValue(filePath2Json.toFile(), new TypeReference<>() {
-
-        });
-        file1Yaml = yamlMapper.readValue(filePath1Yaml.toFile(), new TypeReference<>() {
-
-        });
-        file2Yaml = yamlMapper.readValue(filePath2Yaml.toFile(), new TypeReference<>() {
-
-        });
+        expectedStylish = getTestPath("expected_stylish.txt");
+        expectedPlain = getTestPath("expected_plain.txt");
+        expectedJson = getTestPath("expected_json.json");
     }
 
     private static Path getTestPath(String filename) {
-        return Paths.get(TEST_RESOURCES_DIR, filename).toAbsolutePath().normalize();
-    }
-
-    @Test
-    void testDifferJson() throws Exception {
-        String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
-        // Use parsed maps (file1Json, file2Json) instead of file paths
-        String actual = normalizeLineEndings(Differ.generate(file1Json, file2Json, "stylish"));
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testDifferYamlYml() throws Exception {
-        String expected = normalizeLineEndings(readFile("expected_stylish.txt"));
-        // Use parsed maps (file1Yaml, file2Yaml)
-        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Yaml, "stylish"));
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testDifferYamlJsonPlain() throws Exception {
-        String expected = normalizeLineEndings(readFile("expected_plain.txt"));
-        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "plain"));
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testDifferYamlJsonJson() throws Exception {
-        String expected = normalizeLineEndings(readFile("expected_json.json").replaceAll("\\s+", ""));
-        String actual = normalizeLineEndings(Differ.generate(file1Yaml, file2Json, "json").replaceAll("\\s+", ""));
-        assertEquals(expected, actual);
-    }
-
-    private String readFile(String filename) throws Exception {
-        Path path = getTestPath(filename);
-        return Files.readString(path);
+        return Paths.get("src", "test", "resources", filename).toAbsolutePath().normalize();
     }
 
     private String normalizeLineEndings(String input) {
-        return input.replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
+        return input.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+    }
+
+    @Test
+    void testJsonDefaultFormat() throws Exception {
+        String expected = normalizeLineEndings(readString(expectedStylish));
+        String actual = normalizeLineEndings(Differ.generate(filePath1Json.toString(), filePath2Json.toString()));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testYamlStylishFormat() throws Exception {
+        String expected = normalizeLineEndings(readString(expectedStylish));
+        String actual = normalizeLineEndings(Differ
+                .generate(filePath1Yaml.toString(), filePath2Yaml.toString(), "stylish"));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testMixedPlainFormat() throws Exception {
+        String expected = normalizeLineEndings(readString(expectedPlain));
+        String actual = normalizeLineEndings(Differ
+                .generate(filePath1Yaml.toString(), filePath2Json.toString(), "plain"));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testMixedJsonFormat() throws Exception {
+        String expected = normalizeLineEndings(readString(expectedJson)).replaceAll("\\s+", "");
+        String actual = normalizeLineEndings(Differ
+                .generate(filePath1Json.toString(), filePath2Yaml.toString(), "json")).replaceAll("\\s+", "");
+        assertEquals(expected, actual);
     }
 }

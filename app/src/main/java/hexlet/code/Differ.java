@@ -12,6 +12,23 @@ import java.util.Set;
 
 
 public class Differ {
+
+    public static String generate(Map<String, Object> data1,
+                                  Map<String, Object> data2) throws Exception {
+        return generate(data1, data2, "stylish");
+    }
+
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
+        Map<String, Object> data1 = Parser.parseFile(filePath1);
+        Map<String, Object> data2 = Parser.parseFile(filePath2);
+        return generate(data1, data2, format);
+    }
+
+    // 🔧 Новый метод — по строкам с путями, формат по умолчанию
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
     static String generate(Map<String, Object> data1,
                            Map<String, Object> data2,
                            String format) {
